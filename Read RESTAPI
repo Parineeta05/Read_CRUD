@@ -1,0 +1,35 @@
+
+function view_table(){
+var requestUri = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('StudentDETAIL')/items";
+$.ajax({
+url: requestUri,
+type: "GET",
+headers: {
+"accept":"application/json; odata=verbose"
+},
+success: onSuccess,
+error: onError
+});
+function onSuccess(data) {
+$("#resultsTable").empty();
+var items = data.d.results;
+var fullResults = '<table id="mytable" style="width:100%" border="1 px"><thead><tr> '+'<td><b>ID</b></td>'+'<td><b>FirstName</b></td>'+ '<td><b>LastName</b></td>'+ '<td><b>MobileNumber</b></td>' +'<td><b>EmailID</b></td>' + '<td><b>DateOfJoining</b></td>'+'<td><b>Address</b></td>'+'</tr></thead><tbody>';
+for (var i = 0; i < items.length; i++) {
+fullResults += '<tr>';
+fullResults += '<td>' + items[i].ID + '</td>';
+fullResults += '<td>' + items[i].Title + '</td>';
+fullResults += '<td>' + items[i].LastName + '</td>';
+fullResults += '<td>' + items[i].MobileNumber + '</td>';
+fullResults += '<td>' + items[i].EmailID + '</td>';
+fullResults += '<td>' + items[i].DateOfJoining + '</td>';
+fullResults += '<td>' + items[i].Address + '</td>';
+
+fullResults += '</tr>';
+}
+//fullResults += '</table>';
+$('#resultsTable').append(fullResults);
+}
+function onError(error) {
+alert('Error');
+}
+}
